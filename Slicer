@@ -1,0 +1,18 @@
+print_start MATERIAL=[filament_type[initial_extruder]] EXTRUDER_TEMP=[first_layer_temperature[initial_tool]] BED_TEMP=[first_layer_bed_temperature] NOZZLE_DIA=[nozzle_diameter[initial_tool]] LAYER_HEIGHT=[layer_height] FILAMENT_TYPE=[filament_type]
+SET_PRINT_STATS_INFO TOTAL_LAYER=[total_layer_count]
+
+M117
+
+print_end    ;end script from macro
+SET_FAN_SPEED FAN=pi_fan SPEED=0.5
+
+
+;BEFORE_LAYER_CHANGE
+G92 E0
+TIMELAPSE_TAKE_FRAME
+;[layer_z]
+
+;AFTER_LAYER_CHANGE
+;[layer_z]
+M117 Layer {layer_num+1}/[total_layer_count] : {filament_settings_id[0]}
+SET_PRINT_STATS_INFO CURRENT_LAYER={layer_num + 1}
